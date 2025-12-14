@@ -75,6 +75,12 @@ Improvements and clarifications are always appreciated.
   - `fix/<issue-number>`
 - Doc branches should follow: 
   - `docs/<doc-name>`
+- Chore branches should follow: 
+  - `chore/<chore-name>`
+- Test branches should follow: 
+  - `test/<test-name>`
+- Refactor branches should follow: 
+  - `refactor/<refactor-name>`
 
 ---
 
@@ -104,6 +110,7 @@ footer
 
 - `feat`: New feature
 - `fix`: Bug fix
+- `chore`: Changes to the build process or auxiliary tools and libraries such as documentation generation
 - `docs`: Documentation
 - `refactor`: Code change that neither fixes a bug or adds a feature
 - `test`: Adding missing tests or correcting existing tests
