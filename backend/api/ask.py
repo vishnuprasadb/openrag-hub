@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from core.rag.pipeline import RAGPipeline
 
 router = APIRouter()
-rag = RAGPipeline()
+rag = None  # RAGPipeline() --  Will be injected in v0.2
 
 class AskRequest(BaseModel):
     query: str
