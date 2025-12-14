@@ -22,5 +22,8 @@ OpenRAG-Hub is an open-source, self-hosted Retrieval-Augmented Generation (RAG) 
 - Be safe to reuse across companies
 
 ## License
-Apache 2.0 (to be added)
+- This project is licensed under the **Apache License 2.0**.
+- You are free to use, modify, and distribute this project in both personal and commercial settings, subject to the terms of the license.
+- See the [LICENSE](./LICENSE) file for details.
+
 
