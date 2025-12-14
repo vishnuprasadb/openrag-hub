@@ -2,7 +2,7 @@ from fastapi import APIRouter, BackgroundTasks, Request
 from core.rag.pipeline import RAGPipeline
 
 router = APIRouter()
-rag = RAGPipeline()
+rag = None  # RAGPipeline() --  Will be injected in v0.2
 
 @router.post("/slack/ask")
 async def slack_ask(request: Request, bg: BackgroundTasks):
