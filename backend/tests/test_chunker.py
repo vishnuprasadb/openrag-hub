@@ -40,6 +40,12 @@ def test_multiple_chunks_with_overlap():
         "yz",
     ]
 
+def test_overlap_is_respected():
+    text = "abcdefghijklmnopqrstuvwxyz"
+    chunker = TextChunker(chunk_size=10, overlap=2)
+    chunks = chunker.chunk(text)
+
+    assert chunks[0][-2:] == chunks[1][:2]
 
 def test_invalid_chunk_size():
     with pytest.raises(ValueError):
