@@ -1,13 +1,29 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from core.rag.pipeline import RAGPipeline
+
+from core.factory import create_rag_pipeline
 
 router = APIRouter()
-rag = None  # RAGPipeline() --  Will be injected in v0.2
+
+rag_pipeline = create_rag_pipeline()
 
 class AskRequest(BaseModel):
     query: str
 
 @router.post("/ask")
 async def ask(req: AskRequest):
-    return await rag.run(req.query)
+    if not req.query.strip():
+        raise HTTPException(status_code=400, detail="Query cannot be empty")
+
+    try:
+        result = await rag_pipeline.run(req.query)
+        return {
+            "answer": result["answer"],
+            "sources": result["sources"],
+        }
+    except Exception as e:
+        # Do not leak internals
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to process query",
+        )

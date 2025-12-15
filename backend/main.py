@@ -1,3 +1,29 @@
+import os
+import pydantic
+
+# Patch pydantic for chromadb 0.3.x compatibility
+try:
+    import pydantic_settings
+    # Directly assign BaseSettings to avoid triggering Pydantic V2's migration error on attribute access
+    pydantic.BaseSettings = pydantic_settings.BaseSettings
+except ImportError:
+    pass
+
+# Load environment variables dynamically based on APP_ENV
+# Usage: APP_ENV=prod uvicorn main:app
+# Default: local -> loads .env.local
+from dotenv import load_dotenv
+
+app_env = os.getenv("APP_ENV", "local")
+env_file = f".env.{app_env}"
+
+# Check if the file exists before loading to avoid silent failures if intended
+if os.path.exists(env_file):
+    print(f"Loading environment from {env_file}")
+    load_dotenv(env_file)
+else:
+    print(f"Warning: {env_file} not found. Using system environment variables.")
+
 from fastapi import FastAPI
 from api.ask import router as ask_router
 from api.slack import router as slack_router

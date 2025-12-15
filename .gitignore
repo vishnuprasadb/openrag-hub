@@ -2,6 +2,9 @@
 __pycache__/
 .venv/
 .env
+*/.env.local
+*/.env.prod
+
 
 # Node
 node_modules/
@@ -10,4 +13,6 @@ dist/
 # OS
 .DS_Store
 
-# contributor refresh Mon Dec 15 09:39:16 IST 2025
+# Vector DB Data
+backend/chroma_db/
+*.parquet
