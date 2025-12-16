@@ -1,0 +1,6 @@
+OpenRAG-Hub is an open-source Retrieval-Augmented Generation platform.
+
+It allows teams to query internal documents using a web interface
+or Slack.
+
+The system is designed to be self-hosted and configurable.

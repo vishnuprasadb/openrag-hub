@@ -2,6 +2,8 @@ from typing import List, Dict, Any
 import chromadb
 from chromadb.config import Settings as ChromaSettings
 
+from config import settings
+
 from core.vector.base import VectorStore
 
 
@@ -13,7 +15,7 @@ class ChromaVectorStore(VectorStore):
     def __init__(
         self,
         collection_name: str = "openrag-hub",
-        persist_directory: str = ".chroma",
+        persist_directory: str = settings.VECTOR_DB_PATH,
     ):
         self.client = chromadb.Client(
             ChromaSettings(
