@@ -1,5 +1,6 @@
-import requests
+import httpx
 
 
-def post_to_slack(response_url: str, payload: dict):
-    requests.post(response_url, json=payload, timeout=5)
+async def post_to_slack(response_url: str, payload: dict):
+    async with httpx.AsyncClient(timeout=5) as client:
+        await client.post(response_url, json=payload)
