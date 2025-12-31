@@ -20,6 +20,12 @@ Vector Store + LLM
 
 
 ---
+## Layered Architecture
+
+OpenRAG-Hub follows a layered backend architecture to keep concerns separated
+and prevent interface-specific logic from leaking into the core system.
+
+---
 
 ## Core Components
 
@@ -39,7 +45,32 @@ Both interfaces call the same backend APIs.
 
 ---
 
-### 3. RAG Core
+### 3. Integration (Adapter) Layer
+- Location: `backend/integrations/`
+- Responsibilities:
+  - Platform-specific behavior (Slack, future Discord, etc.)
+  - Request verification
+  - Payload parsing
+  - Posting responses back to external systems
+
+#### Slack Integration Design
+
+Slack integration is implemented as an adapter within the backend service.
+
+- Slack does not run as a separate service
+- Slash commands are handled via HTTP endpoints
+- Requests are acknowledged immediately to avoid Slack timeouts
+- RAG execution happens asynchronously
+- Results are posted back to Slack using the response URL
+
+This design ensures:
+- A single backend service
+- No duplication of RAG logic
+- Easy addition of new integrations using the same pattern
+
+---
+
+### 4. RAG Core
 The RAG core is intentionally isolated and reusable.
 
 Responsibilities:
@@ -50,7 +81,7 @@ Responsibilities:
 
 ---
 
-### 4. Ingestion Engine
+### 5. Ingestion Engine
 Supports:
 - File uploads (PDF, DOCX, TXT, etc.)
 - Google Drive links (file or folder, recursive)
@@ -64,7 +95,7 @@ Steps:
 
 ---
 
-### 5. Storage Layer
+### 6. Storage Layer
 - Vector database (Chroma by default)
 - Metadata stored alongside embeddings
 - Pluggable via abstraction layer
