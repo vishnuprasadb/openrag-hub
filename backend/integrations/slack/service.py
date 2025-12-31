@@ -8,16 +8,26 @@ from core.factory import create_rag_pipeline
 rag_pipeline = create_rag_pipeline()
 
 
-def _run_rag_and_respond(response_url: str, query: str):
-    result = asyncio.run(rag_pipeline.run(query))
+async def _run_rag_and_respond(response_url: str, query: str):
+    try:
+        result = await rag_pipeline.run(query)
 
-    post_to_slack(
-        response_url,
-        {
-            "response_type": "in_channel",
-            "text": result["answer"],
-        },
-    )
+        await post_to_slack(
+            response_url,
+            {
+                "response_type": "in_channel",
+                "text": result["answer"],
+            },
+        )
+
+    except Exception:
+        await post_to_slack(
+            response_url,
+            {
+                "response_type": "ephemeral",
+                "text": "⚠️ Something went wrong while processing your request.",
+            },
+        )
 
 
 async def handle_slack_ask(
