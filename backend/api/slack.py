@@ -1,22 +1,12 @@
-from fastapi import APIRouter, BackgroundTasks, Request
-from core.rag.pipeline import RAGPipeline
+from fastapi import APIRouter, Request, BackgroundTasks
+from integrations.slack.service import handle_slack_ask
 
-router = APIRouter()
-rag = None  # RAGPipeline() --  Will be injected in v0.2
+router = APIRouter(prefix="/slack")
 
-@router.post("/slack/ask")
-async def slack_ask(request: Request, bg: BackgroundTasks):
-    form = await request.form()
-    text = form.get("text", "")
 
-    bg.add_task(process_slack_ask, text)
-
-    return {
-        "response_type": "ephemeral",
-        "text": "🤖 Working on it..."
-    }
-
-async def process_slack_ask(text: str):
-    result = await rag.run(text)
-    # Slack message update will be added in Week 6
-    print("Slack result:", result)
+@router.post("/ask")
+async def slack_ask(
+    request: Request,
+    background_tasks: BackgroundTasks,
+):
+    return await handle_slack_ask(request, background_tasks)
