@@ -25,13 +25,24 @@ else:
     print(f"Warning: {env_file} not found. Using system environment variables.")
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from api.ask import router as ask_router
 from api.slack import router as slack_router
 from utils.logging import setup_logging
+from config import settings
 
 setup_logging()
 
 app = FastAPI(title="OpenRAG-Hub")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[settings.ALLOW_ORIGINS],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(ask_router)
 app.include_router(slack_router)

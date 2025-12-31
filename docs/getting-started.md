@@ -94,7 +94,7 @@ python scripts/ingest_demo.py
 ## Frontend Setup
 
 ```bash
-cd apps/web
+cd frontend
 npm install
 npm run dev
 ```

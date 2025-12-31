@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     APP_NAME: str = "OpenRAG-Hub"
     ENV: str = "local"
+    ALLOW_ORIGINS: str = "http://localhost:5000"
 
     # LLM
     LLM_PROVIDER: str = "openai"

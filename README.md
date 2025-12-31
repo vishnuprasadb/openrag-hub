@@ -90,6 +90,14 @@ All configuration is provided via environment variables.
 
 This makes the project safe for reuse in personal and company environments.
 
+### Run Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
 ---
 
 ## 🤝 Contributing
